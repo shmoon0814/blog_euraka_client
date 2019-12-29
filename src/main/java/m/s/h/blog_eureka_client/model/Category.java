@@ -7,6 +7,7 @@ import lombok.Setter;
 import m.s.h.blog_eureka_client.enums.PostState;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,21 +15,21 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @Setter
-@Table(name = "blog_post")
+@Table(name = "category")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @DynamicUpdate(true)
-public class BlogPost {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private String content;
+    private Integer parent_id;
+
     @CreationTimestamp
     private Timestamp created_at;
-    private PostState post_state;
+    @UpdateTimestamp
     private Timestamp updated_at;
     private Integer user_id;
-    private Integer category_id;
 
 }
