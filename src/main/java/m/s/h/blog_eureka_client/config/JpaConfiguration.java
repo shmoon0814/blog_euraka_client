@@ -1,10 +1,8 @@
 package m.s.h.blog_eureka_client.config;
 
-import m.s.h.common.DbInfo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.awt.image.DataBuffer;
 import java.util.Properties;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,19 +15,26 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.persistence.EntityManagerFactory;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"m.s.h.blog_eureka_client.repository", "com.intermind.kr.admin.repository"}, entityManagerFactoryRef = "jpaEntityManagerFactory", transactionManagerRef = "jpaTransactionManager")
+@EnableJpaRepositories(basePackages = {"m.s.h.blog_eureka_client.repository"}, entityManagerFactoryRef = "jpaEntityManagerFactory", transactionManagerRef = "jpaTransactionManager")
 public class JpaConfiguration {
+
+    @Value("${database_password}")
+    private String database_password;
+
+    @Value("${database_url}")
+    private String database_url;
+
+    @Value("${database_id}")
+    private String database_id;
 
     @Bean(name = "jpsDataSource")
     public DriverManagerDataSource jpsDataSource(){
-        DbInfo dbInfo = new DbInfo();
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
-        dataSource.setUrl(dbInfo.getDatabase_url());
-        dataSource.setUsername("root");
-        dataSource.setPassword(dbInfo.getDatabase_password());
+        dataSource.setUrl(database_url);
+        dataSource.setUsername(database_id);
+        dataSource.setPassword(database_password);
 
-        dbInfo = null;
         return dataSource;
     }
 
@@ -37,7 +42,7 @@ public class JpaConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(jpsDataSource());
-        em.setPackagesToScan(new String[] {"com.intermind.kr.model"});
+        em.setPackagesToScan(new String[] {"m.s.h.blog_eureka_client.model"});
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

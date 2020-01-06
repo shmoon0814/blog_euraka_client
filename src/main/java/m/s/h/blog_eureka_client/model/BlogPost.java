@@ -7,6 +7,7 @@ import lombok.Setter;
 import m.s.h.blog_eureka_client.enums.PostState;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -29,6 +30,7 @@ public class BlogPost {
 
     @Enumerated(EnumType.STRING)
     private PostState post_state;
+    @UpdateTimestamp
     private Timestamp updated_at;
     private Integer user_id;
     private Integer category_id;
