@@ -26,6 +26,8 @@ public class BlogPost {
     private String content;
     @CreationTimestamp
     private Timestamp created_at;
+
+    @Enumerated(EnumType.STRING)
     private PostState post_state;
     private Timestamp updated_at;
     private Integer user_id;
