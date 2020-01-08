@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.function.Function;
 
 public class JwtTokenFactory {
@@ -24,7 +25,14 @@ public class JwtTokenFactory {
         }
 
         private JwtDecoder decode(){
+            Enumeration<String> headername = this.request.getHeaderNames();
+            while(headername.hasMoreElements()){
+                String param = headername.nextElement();
+                System.out.println("header name == " + param + " , value == " + this.request.getHeader(param));
+            }
             String token = this.request.getHeader(header).substring(7);
+            System.out.println("------");
+            System.out.println(token);
             claims = Jwts.parser()
                     .setSigningKey(this.secret)
                     .parseClaimsJws(token)
