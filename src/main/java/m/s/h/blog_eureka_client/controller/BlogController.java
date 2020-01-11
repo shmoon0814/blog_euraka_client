@@ -26,12 +26,6 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "authorization header", required = true, dataType = "string", paramType = "header", defaultValue = "bearer eyJ1c2VyVHlwZSI6IlVTRVIiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzY1NjMyNTgsImV4cCI6MTU3ODMxNjI5MSwiaXNzIjoibW93YV9hdXRoZW5jaWF0aW9uX3NlcnZlciJ9.ufRSIftrTW5qjS-eQJ_CRycaiPnynoJKIJrL433yt_g"),
-            @ApiImplicitParam(name = "블로그 포스트 데이터", value = "value 값 아무거나 인트형", required = true, dataTypeClass = BlogPost.class),
-    })
-    @ApiOperation(value = "포스트 등록 api")
-    @ApiResponses(@ApiResponse(code = 200, message = "OK", response = BlogPost.class))
     @PostMapping("/blogpost")
     public ResponseEntity<BlogPost> registBlogPost(BlogPost blogPost){
         return blogService.registBlogPost(blogPost);

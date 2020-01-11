@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 @Service
 public class BlogService {
@@ -36,7 +37,14 @@ public class BlogService {
     }
 
     public ResponseEntity test(HttpServletRequest request){
-        return new ResponseEntity(JwtTokenFactory.jwtDecoer(jwt_secret, request).getUserId().toString(),HttpStatus.OK);
+
+        Enumeration<String>  value =  request.getHeaderNames();
+        while (value.hasMoreElements()){
+            String key = value.nextElement();
+            System.out.println("header param  == " + key + " ,  value == " + request.getHeader(key));
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
