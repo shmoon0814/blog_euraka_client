@@ -10,22 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 @Api(tags = "카테고리 컨트롤러")
 @RestController
 @RequestMapping("/blog")
 public class CategoryController {
 
-    @Autowired
     CategoryService categoryService;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "authorization header", required = true, dataType = "string", paramType = "header", defaultValue = "bearer eyJ1c2VyVHlwZSI6IlVTRVIiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzY1NjMyNTgsImV4cCI6MTU3ODMxNjI5MSwiaXNzIjoibW93YV9hdXRoZW5jaWF0aW9uX3NlcnZlciJ9.ufRSIftrTW5qjS-eQJ_CRycaiPnynoJKIJrL433yt_g"),
-            @ApiImplicitParam(name = "카테고리 데이터", value = "value 값 아무거나 인트형", required = true, dataTypeClass = Category.class),
-    })
-    @ApiOperation(value = "카테고리 등록 api")
-    @ApiResponses(@ApiResponse(code = 200, message = "OK", response = Category.class))
-    @PostMapping("/registCategory")
-    public ResponseEntity registCategory(Category category){
-        return categoryService.registCategory(category);
+    @Autowired
+    public CategoryController(CategoryService categoryService){
+        this.categoryService = categoryService;
     }
+
+
+    @ApiOperation(value = "카테고리 등록 api")
+    @PostMapping("/registCategory")
+    public ResponseEntity registCategory(HttpServletRequest request, List<Category> category){
+        return categoryService.registCategory(request, category);
+    }
+
 }

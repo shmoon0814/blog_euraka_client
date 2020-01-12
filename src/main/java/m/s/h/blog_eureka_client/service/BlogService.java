@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 @Service
 public class BlogService {
@@ -25,8 +23,6 @@ public class BlogService {
     }
 
     public ResponseEntity registBlogPost(BlogPost blogPost){
-
-        //TODO 벨리데이션 체크
         blogPostRepository.save(blogPost);
         return new ResponseEntity(blogPost, HttpStatus.OK);
     }
@@ -37,14 +33,7 @@ public class BlogService {
     }
 
     public ResponseEntity test(HttpServletRequest request){
-
-        Enumeration<String>  value =  request.getHeaderNames();
-        while (value.hasMoreElements()){
-            String key = value.nextElement();
-            System.out.println("header param  == " + key + " ,  value == " + request.getHeader(key));
-        }
-
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(request.getHeader("username"), HttpStatus.OK);
     }
 
 }

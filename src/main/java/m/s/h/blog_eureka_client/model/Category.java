@@ -4,6 +4,7 @@ package m.s.h.blog_eureka_client.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import m.s.h.blog_eureka_client.enums.CategoryType;
 import m.s.h.blog_eureka_client.enums.PostState;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
@@ -25,11 +26,11 @@ public class Category {
     private Integer id;
     private String title;
     private Integer parent_id;
-
+    @Enumerated(EnumType.STRING)
+    private CategoryType category_type;
     @CreationTimestamp
     private Timestamp created_at;
-    @UpdateTimestamp
-    private Timestamp updated_at;
     private Integer user_id;
+    private Integer order_idx;
 
 }
