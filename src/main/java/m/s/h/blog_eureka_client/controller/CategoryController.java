@@ -6,9 +6,7 @@ import m.s.h.blog_eureka_client.model.Category;
 import m.s.h.blog_eureka_client.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -30,6 +28,12 @@ public class CategoryController {
     @PostMapping("/registCategory")
     public ResponseEntity registCategory(HttpServletRequest request, List<Category> category){
         return categoryService.registCategory(request, category);
+    }
+
+    @ApiOperation(value = "해당 유저의 카테고리 리스트 가져오기")
+    @GetMapping("/user/{display_name}")
+    public ResponseEntity getUserCategory(@PathVariable String display_name){
+        return categoryService.getUserCategory(display_name);
     }
 
 }
